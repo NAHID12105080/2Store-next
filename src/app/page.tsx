@@ -1,9 +1,20 @@
-import Image from "next/image";
+import { getPosts } from "@/server/actions/get-posts";
 
-export default function Home() {
-  return (
-    <>
-      <h1>ecom bd</h1>
-    </>
-  );
+export default async function Home() {
+  const { error, successful } = await getPosts();
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (successful) {
+    return (
+      <div>
+        {successful.map((post) => (
+          <div key={post.id}>
+            <h2>{post.title}</h2>
+          </div>
+        ))}
+      </div>
+    );
+  }
 }
