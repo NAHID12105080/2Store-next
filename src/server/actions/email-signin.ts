@@ -1,12 +1,11 @@
-"use server";
+"use server"
+import { LoginSchema } from "@/types/login-schema"
+import { createSafeActionClient } from "next-safe-action"
+import { db } from ".."
+import { eq } from "drizzle-orm"
+import { users } from "../schema"
 
-import { createSafeActionClient } from "next-safe-action";
-import { db } from "..";
-import { eq } from "drizzle-orm";
-import { users } from "../schema";
-import { LoginSchema } from "@/types/login-schema";
-
-const action = createSafeActionClient();
+const action = createSafeActionClient()
 
 export const emailSignIn = action(
   LoginSchema,
@@ -14,13 +13,13 @@ export const emailSignIn = action(
     //Check if the user is in the database
     const existingUser = await db.query.users.findFirst({
       where: eq(users.email, email),
-    });
+    })
 
     if (existingUser?.email !== email) {
-      return { error: "Email not  found" };
+      return { error: "Email not  found" }
     }
 
-    console.log(email, password, code);
-    return { success: email };
+    console.log(email, password, code)
+    return { success: email }
   }
-);
+)
