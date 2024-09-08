@@ -4,17 +4,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import Socials from "./socials";
-import { BackButton } from "./back-button";
+} from "@/components/ui/card"
+import Socials from "./socials"
+import { BackButton } from "./back-button"
 
 type CardWrapperProps = {
-  children: React.ReactNode;
-  cardTitle: string;
-  backButtonHref: string;
-  backButtonLabel: string;
-  showSocials?: boolean;
-};
+  children: React.ReactNode
+  cardTitle: string
+  backButtonHref: string
+  backButtonLabel: string
+  showSocials?: boolean
+}
 
 export const AuthCard = ({
   children,
@@ -38,5 +38,5 @@ export const AuthCard = ({
         <BackButton href={backButtonHref} label={backButtonLabel} />
       </CardFooter>
     </Card>
-  );
-};
+  )
+}
