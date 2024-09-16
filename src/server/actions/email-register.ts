@@ -1,22 +1,21 @@
 "use server";
 import { RegisterSchema } from "@/types/register-schema";
-import { createSafeActionClient } from "next-safe-action";
+
 import bcrpyt from "bcrypt";
 import { db } from "..";
 import { eq } from "drizzle-orm";
 import { users } from "../schema";
 import { generateEmailVerificationToken } from "./tokens";
 import { sendVerificationEmail } from "./email";
+import { actionClient } from "@/lib/safe-action";
 
-const action = createSafeActionClient();
-
-export const emailRegister = action(
-  RegisterSchema,
-  async ({ email, name, password }) => {
-    //We are hasing our password
+export const emailRegister = actionClient
+  .schema(RegisterSchema)
+  .action(async ({ parsedInput: { email, name, password } }) => {
+    // Hashing the password
     const hashedPassword = await bcrpyt.hash(password, 10);
 
-    //Check existing user
+    // Check for existing user
     const existingUser = await db.query.users.findFirst({
       where: eq(users.email, email),
     });
@@ -31,10 +30,10 @@ export const emailRegister = action(
 
         return { success: "Email Confirmation resent" };
       }
-      return { error: "Email already in use" };
+      return { failure: "Email already in use" };
     }
 
-    //Logic for when the user is not registered
+    // Logic for when the user is not registered
     await db.insert(users).values({
       email,
       name,
@@ -42,12 +41,10 @@ export const emailRegister = action(
     });
 
     const verificationToken = await generateEmailVerificationToken(email);
-
     await sendVerificationEmail(
       verificationToken[0].email,
       verificationToken[0].token
     );
 
     return { success: "Confirmation Email Sent!" };
-  }
-);
+  });

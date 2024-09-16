@@ -5,6 +5,6 @@ import { drizzle } from "drizzle-orm/neon-http";
 config({ path: ".env" }); // or .env.local
 import * as schema from "@/server/schema";
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = neon(process.env.POSTGRES_URL!);
 
 export const db = drizzle(sql, { schema, logger: true });
