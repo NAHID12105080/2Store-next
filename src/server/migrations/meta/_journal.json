@@ -15,6 +15,13 @@
       "when": 1725773527311,
       "tag": "0001_faithful_felicia_hardy",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1726508291032,
+      "tag": "0002_dapper_omega_sentinel",
+      "breakpoints": true
     }
   ]
 }
