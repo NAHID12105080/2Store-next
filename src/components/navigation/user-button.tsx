@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { Session } from "next-auth";
-import { signOut } from "next-auth/react";
+import { Session } from "next-auth"
+import { signOut } from "next-auth/react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,35 +9,35 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Image from "next/image";
-import { Suspense, useEffect, useState } from "react";
-import { LogOut, Moon, Settings, Sun, Truck, TruckIcon } from "lucide-react";
-import { useTheme } from "next-themes";
-import { Switch } from "../ui/switch";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import Image from "next/image"
+import { Suspense, useEffect, useState } from "react"
+import { LogOut, Moon, Settings, Sun, Truck, TruckIcon } from "lucide-react"
+import { useTheme } from "next-themes"
+import { Switch } from "../ui/switch"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 export const UserButton = ({ user }: Session) => {
-  const { setTheme, theme } = useTheme();
-  const [checked, setChecked] = useState(false);
-  const router = useRouter();
+  const { setTheme, theme } = useTheme()
+  const [checked, setChecked] = useState(false)
+  const router = useRouter()
 
   function setSwitchState() {
     switch (theme) {
       case "dark":
-        return setChecked(true);
+        return setChecked(true)
       case "light":
-        return setChecked(false);
+        return setChecked(false)
       case "system":
-        return setChecked(false);
+        return setChecked(false)
     }
   }
 
   useEffect(() => {
-    setSwitchState();
-  });
+    setSwitchState()
+  }, [])
 
   if (user)
     return (
@@ -117,9 +117,9 @@ export const UserButton = ({ user }: Session) => {
                   className="scale-75 "
                   checked={checked}
                   onCheckedChange={(e) => {
-                    setChecked((prev) => !prev);
-                    if (e) setTheme("dark");
-                    if (!e) setTheme("light");
+                    setChecked((prev) => !prev)
+                    if (e) setTheme("dark")
+                    if (!e) setTheme("light")
                   }}
                 />
               </div>
@@ -137,5 +137,5 @@ export const UserButton = ({ user }: Session) => {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-    );
-};
+    )
+}
