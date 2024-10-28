@@ -7,7 +7,6 @@ import {
   boolean,
   pgEnum,
   unique,
-  PgTable,
   serial,
   real,
   index,
@@ -257,11 +256,13 @@ export const orderProductRelations = relations(orderProduct, ({ one }) => ({
     references: [orders.id],
     relationName: "orderProduct",
   }),
+
   product: one(products, {
     fields: [orderProduct.productID],
     references: [products.id],
     relationName: "products",
   }),
+
   productVariants: one(productVariants, {
     fields: [orderProduct.productVariantID],
     references: [productVariants.id],
